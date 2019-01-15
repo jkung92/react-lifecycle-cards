@@ -26,11 +26,10 @@ class Game extends Component {
       `${this.props.apiUrl}/deck/${this.state.deckId}/draw/?count=1`
     );
     let cardImageUrl = response.data.cards[0].image;
-    console.log(response, `this is response`);
     let randomRotation = Math.ceil(Math.random() * 360);
-    let newCards = [...this.state.cards, { cardImageUrl, randomRotation }];
-    this.setState({
-      cards: newCards
+    this.setState(currState => {
+      let newCards = [...currState.cards, { cardImageUrl, randomRotation }];
+      return { cards: newCards };
     });
   };
 
