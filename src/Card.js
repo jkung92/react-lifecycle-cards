@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Card.css';
 
 class Card extends Component {
   static defaultProps = {
@@ -6,7 +7,15 @@ class Card extends Component {
   };
 
   render() {
-    return <img src={this.props.imageUrl} alt="cardImage" />;
+    let styleObj = { transform: `rotate(${this.props.randomRotation}deg)` };
+    return (
+      <img
+        src={this.props.imageUrl}
+        alt="cardImage"
+        className="cardImg"
+        style={styleObj}
+      />
+    );
   }
 }
 

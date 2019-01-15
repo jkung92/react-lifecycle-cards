@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import Card from './Card';
 import axios from 'axios';
+import './Game.css';
 
 class Game extends Component {
   static defaultProps = { apiUrl: 'https://deckofcardsapi.com/api' };
 
   constructor(props) {
     super(props);
-    this.state = { deckId: '', cards: [] };
+    this.state = { deckId: '', cards: [], cardsLeft: undefined };
     // this.handleClick = this.handleClick.bind(this);
   }
 
@@ -25,7 +26,9 @@ class Game extends Component {
       `${this.props.apiUrl}/deck/${this.state.deckId}/draw/?count=1`
     );
     let cardImageUrl = response.data.cards[0].image;
-    let newCards = [...this.state.cards, cardImageUrl];
+    console.log(response, `this is response`);
+    let randomRotation = Math.ceil(Math.random() * 360);
+    let newCards = [...this.state.cards, { cardImageUrl, randomRotation }];
     this.setState({
       cards: newCards
     });
@@ -36,8 +39,11 @@ class Game extends Component {
       <div>
         <button onClick={this.handleClick}> Gimme A Card! </button>
         <div className="container">
-          {this.state.cards.map(cardImageUrl => (
-            <Card imageUrl={cardImageUrl} />
+          {this.state.cards.map(card => (
+            <Card
+              imageUrl={card.cardImageUrl}
+              randomRotation={card.randomRotation}
+            />
           ))}
         </div>
       </div>
